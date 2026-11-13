@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document Library — Public Vault</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-hover: #0ea5e9;
+      --border: #334155;
+    }
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #0284c7;
+      --accent-hover: #0369a1;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: var(--bg); color: var(--text); font-family: system-ui, sans-serif; line-height: 1.6; }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+    
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+    h1 { font-size: 1.8rem; }
+    #theme-toggle { background: var(--surface); color: var(--text); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+
+    .search-box { width: 100%; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 1rem; margin-bottom: 30px; outline: none; }
+    .search-box:focus { border-color: var(--accent); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
+    .card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+    .meta { font-size: 0.85rem; color: var(--muted); margin-bottom: 16px; }
+    
+    .actions { display: flex; gap: 10px; }
+    .btn { flex: 1; text-align: center; background: var(--accent); color: #0f172a; font-weight: 600; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; transition: background 0.2s; }
+    .btn:hover { background: var(--accent-hover); color: #fff; }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-outline:hover { background: var(--surface); border-color: var(--accent); color: var(--text); }
+
+    footer { text-align: center; margin-top: 60px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); padding-top: 20px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div>
+        <h1>📂 Quality Notes</h1>
+        <p style="color: var(--muted); font-size: 0.9rem;">Access and download official notes & PDFs.</p>
+      </div>
+      <button id="theme-toggle">☀️ Light</button>
+    </header>
+
+    <input type="text" id="searchInput" class="search-box" placeholder="Search for notes by name..." onkeyup="filterFiles()" />
+
+    <div class="grid" id="fileGrid">
+      <!-- File 1 -->
+      <div class="card" data-title="physics notes ">
+        <div>
+          <h3>Physics Notes </h3>
+          <div class="meta">PDF • 2.4 MB • Added Oct 2026</div>
+        </div>
+        <div class="actions">
+          <a href="files/physics-ch1.pdf" target="_blank" class="btn btn-outline">View</a>
+          <a href="files/physics-ch1.pdf" download class="btn">Download</a>
+        </div>
+      </div>
+
+      <!-- File 2 -->
+      <div class="card" data-title="python programming cheat sheet">
+        <div>
+          <h3>Chemisry Notes</h3>
+          <div class="meta">PDF • 1.1 MB • Added Oct 2026</div>
+        </div>
+        <div class="actions">
+          <a href="files/Chemistry Notes.pdf" target="_blank" class="btn btn-outline">View</a>
+          <a href="files/Chemistry Notes.pdf" download class="btn">Download</a>
+        </div>
+      </div>
+
+      <!-- File 3 -->
+      <div class="card" data-title="math formula handbook">
+        <div>
+          <h3>Biology Notes</h3>
+          <div class="meta">PDF • 3.8 MB • Added Nov 2026</div>
+        </div>
+        <div class="actions">
+          <a href="files/Biology Notes.pdf" target="_blank" class="btn btn-outline">View</a>
+          <a href="files/Biology Notes.pdf" download class="btn">Download</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 Document Vault. Hosted free on GitHub Pages.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Theme Switcher
+    const toggleBtn = document.getElementById("theme-toggle");
+    const htmlEl = document.documentElement;
+    toggleBtn.addEventListener("click", () => {
+      const isDark = htmlEl.getAttribute("data-theme") === "dark";
+      htmlEl.setAttribute("data-theme", isDark ? "light" : "dark");
+      toggleBtn.textContent = isDark ? "🌙 Dark" : "☀️ Light";
+    });
+
+    // Real-time Search Filter
+    function filterFiles() {
+      let input = document.getElementById('searchInput').value.toLowerCase();
+      let cards = document.getElementsByClassName('card');
+      for (let i = 0; i < cards.length; i++) {
+        let title = cards[i].getAttribute('data-title');
+        cards[i].style.display = title.includes(input) ? "flex" : "none";
+      }
+    }
+  </script>
+
+</body>
+</html>
